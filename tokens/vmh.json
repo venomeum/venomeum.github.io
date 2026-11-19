@@ -1,0 +1,32 @@
+{
+  "name": "Venomeum",
+  "symbol": "VMH",
+  "decimals": 18,
+  "totalSupply": 1000000000,
+  "description": "Venomeum ($VMH) \u2014 ERC-20 with burnable tax, automatic buyback and automatic liquidity pool, trading on Venomeum Swap (own Uniswap V2) with removable liquidity. Testnet deployments.",
+  "logo": "https://venomeum.github.io/venomeum/assets/logo-mark.jpg",
+  "features": {
+    "burnableTax": "1% of every DEX buy/sell is burned",
+    "automaticLiquidity": "1% accrues and auto-adds to the liquidity pool",
+    "automaticBuyback": "1% accrues, auto-swaps to native and buys back + burns VMH"
+  },
+  "dex": {
+    "wrappedNative": "0x5Df9ecECC7c0e7b43E7afC3b3238Aa19fB3A0C87",
+    "factory": "0x6e0F7bB0AfA4f4e0208e9A6F06a8759003E2D184",
+    "router": "0xC83d7A0079Fc410Ddd4cE4aaD7bF2216350342Cb"
+  },
+  "deployments": {
+    "arcTestnet": {
+      "chainId": 5042002,
+      "burnerDeployment": "0xeF8a48269661Fd8d5FE1453A74d27Fe375178cef",
+      "pair": "0x39B3f0294E37C99a2395E443D6795e3B64742FD5",
+      "circleAgentWalletDeployment": "0x4666CA32A6af759d3dd4752ee1323778854BA6aB",
+      "circlePair": "0x97573A80f21Ab377D62c340b6C1a6f898133dF98"
+    },
+    "robinhoodChainTestnet": {
+      "chainId": 46630,
+      "burnerDeployment": "0xA9808afB0213295778D0CEE459c182C1524858b4",
+      "pair": "0x496d70e4443566c4c94F8F2674e191699166cd21"
+    }
+  }
+}
