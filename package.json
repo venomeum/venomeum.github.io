@@ -1,0 +1,1 @@
+{"author":"Venom (@venomeum)","description":"Venomeum Blockchain — $VMH. Website, multichain burner wallet tools, and the daily verified testnet faucet program.","keywords":["venomeum","vmh","blockchain","testnet","faucet","burner-wallet"],"license":"MIT","name":"venomeum","private":true,"scripts":{"dev":"npx serve .","start":"npx serve ."},"version":"0.1.0"}

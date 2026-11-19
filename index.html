@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VENOMEUM — $VMH</title>
+<meta name="description" content="Venomeum Blockchain — $VMH. Multichain burner wallet, live dashboard, and a daily verified testnet faucet program. DYOR — don't trust, verify.">
+<link rel="icon" href="assets/logo-mark.jpg">
+<style>
+  :root{--bg:#000;--panel:#0d0d0f;--line:#232326;--txt:#f5f5f5;--dim:#9c9ca3;--acc:#fff}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+  a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  header{padding:56px 0 44px;text-align:center;border-bottom:1px solid var(--line)}
+  header img.mark{width:min(300px,70vw);height:auto;display:block;margin:0 auto}
+  .vmh{font-size:clamp(56px,12vw,104px);font-weight:800;letter-spacing:1px;line-height:1.05;margin-top:10px}
+  .vmh .hand{font-size:.62em;vertical-align:.08em}
+  .venomeum{color:var(--dim);font-size:clamp(26px,6vw,44px);font-weight:300;letter-spacing:6px;margin-top:2px}
+  .tag{color:var(--dim);max-width:580px;margin:20px auto 0}
+  .motto{margin-top:18px;font-size:13px;letter-spacing:2px;color:var(--txt)}
+  .motto span{color:var(--dim)}
+  section{padding:44px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:26px;margin-bottom:6px}
+  .sub{color:var(--dim);margin-bottom:22px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .card .net{color:var(--dim);font-size:13px;text-transform:uppercase;letter-spacing:1px}
+  .card .bal{font-size:26px;font-weight:700;margin:4px 0 2px}
+  .card .bal small{font-size:14px;color:var(--dim);font-weight:600}
+  .card .note{color:var(--dim);font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  td,th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--dim);font-weight:600}
+  .addr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;word-break:break-all}
+  button.copy{background:#17171a;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:12px;white-space:nowrap}
+  button.copy:hover{border-color:#fff}
+  ul{margin-left:20px}
+  li{margin:6px 0}
+  .warn{background:#12100a;border:1px solid #4d3f06;color:#fde68a;border-radius:12px;padding:14px 18px;font-size:14px}
+  .frame{border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .frame img{width:100%;display:block}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .duo img{width:100%;border:1px solid var(--line);border-radius:14px;display:block}
+  .duo figcaption{color:var(--dim);font-size:13px;text-align:center;margin-top:6px}
+  footer{padding:34px 0 54px;text-align:center;color:var(--dim);font-size:14px}
+  @media(max-width:560px){.duo{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img class="mark" src="assets/logo-mark.jpg" alt="Venomeum mark — a snake coiled into a victory hand">
+    <div class="vmh"><span class="hand">✌</span> - $VMH</div>
+    <div class="venomeum">venomeum</div>
+    <p class="tag">Venomeum Blockchain, in build. A multichain burner wallet, a live dashboard,
+    and a daily testnet faucet program — every claim verified on-chain.</p>
+    <p class="motto">DYOR <span>•</span> DON'T TRUST, VERIFY <span>•</span> NOT YOUR KEYS, NOT YOUR COINS</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>📊 Live dashboard — burner wallet</h2>
+    <p class="sub">Read-only live balances fetched straight from public chain APIs when this page loads.
+    No keys, no tracking — the wallet itself is a burner for testnets and faucets.</p>
+    <div class="grid" id="balances">
+      <div class="card"><div class="net">Ethereum Sepolia</div><div class="bal" data-bal="sepolia">…</div><div class="note">ETH · claimed via pk910 PoW faucet</div></div>
+      <div class="card"><div class="net">Arc Testnet</div><div class="bal" data-bal="arc">…</div><div class="note">USDC (native gas token) · Circle faucet</div></div>
+      <div class="card"><div class="net">Robinhood Chain Testnet</div><div class="bal" data-bal="robinhood">…</div><div class="note">ETH · Zalalena faucet</div></div>
+      <div class="card"><div class="net">SUI Testnet</div><div class="bal" data-bal="sui-testnet">…</div><div class="note">SUI · official Sui faucet</div></div>
+      <div class="card"><div class="net">SUI Devnet</div><div class="bal" data-bal="sui-devnet">…</div><div class="note">SUI · official Sui faucet</div></div>
+      <div class="card"><div class="net">NEAR Testnet</div><div class="bal" data-bal="near">…</div><div class="note">NEAR · docs.near.org faucet</div></div>
+      <div class="card"><div class="net">Solana Devnet</div><div class="bal" data-bal="solana">…</div><div class="note">SOL · plus 20 USDC + 20 EURC from Circle</div></div>
+      <div class="card"><div class="net">Circle testnets (burner)</div><div class="bal">560 <small>USDC</small></div><div class="note">+ 180 EURC + 0.0002 cirBTC across 28 networks · day 1 sweep</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>🪙 $VMH — the token</h2>
+    <p class="sub">Venomeum (VMH) is live on testnets. ERC-20, 1,000,000,000 supply, 18 decimals.
+    Tax applies only to DEX trades (never wallet-to-wallet): <strong>1% burned</strong>,
+    <strong>1% automatic liquidity</strong>, <strong>1% automatic buyback</strong> — the buyback slice
+    auto-swaps to the chain's native token, buys VMH back from the pool, and burns it.</p>
+    <img src="assets/logo-mark.jpg" alt="VMH token logo — the Venomeum snake-victory mark" style="width:140px;border:1px solid var(--line);border-radius:14px;display:block;margin-bottom:18px">
+    <table>
+      <tr><th style="width:230px">Deployment</th><th>Contract</th><th style="width:86px"></th></tr>
+      <tr><td>Arc Testnet — burner wallet</td><td class="addr">0xeF8a48269661Fd8d5FE1453A74d27Fe375178cef</td><td><button class="copy" data-copy="0xeF8a48269661Fd8d5FE1453A74d27Fe375178cef">Copy</button></td></tr>
+      <tr><td>Arc Testnet — Circle agent wallet</td><td class="addr">0x4666CA32A6af759d3dd4752ee1323778854BA6aB</td><td><button class="copy" data-copy="0x4666CA32A6af759d3dd4752ee1323778854BA6aB">Copy</button></td></tr>
+      <tr><td>Robinhood Chain Testnet — burner wallet</td><td class="addr">0xA9808afB0213295778D0CEE459c182C1524858b4</td><td><button class="copy" data-copy="0xA9808afB0213295778D0CEE459c182C1524858b4">Copy</button></td></tr>
+    </table>
+    <p style="margin-top:14px" class="note">Contract source: <a href="contracts/VMH.sol">contracts/VMH.sol</a> ·
+    deployment record: <a href="contracts/deployments.json">contracts/deployments.json</a> ·
+    token metadata: <a href="tokens/vmh.json">tokens/vmh.json</a>.</p>
+    <h3 style="margin-top:26px">🦄 Venomeum Swap — our own pools</h3>
+    <p class="sub" style="margin-bottom:12px">Neither testnet had a DEX, so we deployed our own Uniswap V2
+    (factory <span class="addr">0x6e0F7bB0AfA4f4e0208e9A6F06a8759003E2D184</span>, router
+    <span class="addr">0xC83d7A0079Fc410Ddd4cE4aaD7bF2216350342Cb</span> — same addresses on both chains)
+    and launched the pools on it: 1,000,000 VMH against 1 USDC on Arc and 0.001 ETH on Robinhood.
+    <strong>Liquidity is removable</strong> — LP tokens stay in the provider's wallet, withdrawable at any
+    time; we proved it by withdrawing 10% of every pool again after launch. Real taxed trades already ran
+    through the pools: roughly <strong>2,500 VMH burned per deployment</strong> from the burn tax plus the
+    automatic buyback, and the auto-LP topped the pools up on its own.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>🔥 Burner wallet — public addresses</h2>
+    <p class="sub">One BIP39 mnemonic, eight chains, verified 27/27 checks (keys re-derive to addresses,
+    sign/verify on every chain). <strong>Burner only:</strong> testnets, faucets, small amounts — never significant funds.</p>
+    <table>
+      <tr><th style="width:130px">Chain</th><th>Address</th><th style="width:86px"></th></tr>
+      <tr><td>Bitcoin (SegWit)</td><td class="addr">bc1qq57cleey4qzft3c3f75fjgzqwsew3zegms8xuk</td><td><button class="copy" data-copy="bc1qq57cleey4qzft3c3f75fjgzqwsew3zegms8xuk">Copy</button></td></tr>
+      <tr><td>Bitcoin testnet</td><td class="addr">tb1qwgxdcqsz0pkemd4evdx7f5rls3v6fasehr35qr</td><td><button class="copy" data-copy="tb1qwgxdcqsz0pkemd4evdx7f5rls3v6fasehr35qr">Copy</button></td></tr>
+      <tr><td>EVM (all chains)</td><td class="addr">0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1</td><td><button class="copy" data-copy="0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1">Copy</button></td></tr>
+      <tr><td>TRON</td><td class="addr">TUwbQWXrcVjhmXfNr3D44zgvib9gV6cH26</td><td><button class="copy" data-copy="TUwbQWXrcVjhmXfNr3D44zgvib9gV6cH26">Copy</button></td></tr>
+      <tr><td>Solana</td><td class="addr">AjyRpt4jQ8WkS21J2HreLYHJf72wAWrAiJPWjP2N23Tz</td><td><button class="copy" data-copy="AjyRpt4jQ8WkS21J2HreLYHJf72wAWrAiJPWjP2N23Tz">Copy</button></td></tr>
+      <tr><td>SUI</td><td class="addr">0x76f1d8c90078b8f2156818e37836f6ed1cb6c6b4ac0fbeca196c4a2d95a4f914</td><td><button class="copy" data-copy="0x76f1d8c90078b8f2156818e37836f6ed1cb6c6b4ac0fbeca196c4a2d95a4f914">Copy</button></td></tr>
+      <tr><td>NEAR (implicit)</td><td class="addr">a561df05cac1f21e047daf000f335cf2844e5fc305ad3453e085fa6b2bbe1fa0</td><td><button class="copy" data-copy="a561df05cac1f21e047daf000f335cf2844e5fc305ad3453e085fa6b2bbe1fa0">Copy</button></td></tr>
+      <tr><td>TON</td><td class="addr">UQAyzCfLeYKY08QLXm7ZvZGzyaggRCJp-nw3JmVub2qpxJWI</td><td><button class="copy" data-copy="UQAyzCfLeYKY08QLXm7ZvZGzyaggRCJp-nw3JmVub2qpxJWI">Copy</button></td></tr>
+    </table>
+    <p style="margin-top:16px" class="warn">⚠️ The seed phrase and private keys for this wallet are <strong>never</strong> published —
+    not here, not in the GitHub repo, not anywhere online. Public addresses only, by design.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>🚰 Faucet program — daily, automated, verified</h2>
+    <p class="sub">Free testnet tokens only. No KYC, no subscriptions, no wallet-connect on unverified sites.
+    Every claim is checked on-chain before it counts.</p>
+    <div class="grid">
+      <div class="card"><div class="net">Daily ~18:57 GMT+7</div><div class="bal" style="font-size:20px">Circle Agent Wallet</div><div class="note">ARC testnet USDC via Circle CLI</div></div>
+      <div class="card"><div class="net">Daily ~20:19 GMT+7</div><div class="bal" style="font-size:20px">Circle web faucet</div><div class="note">USDC / EURC / cirBTC sweep for the burner, all testnets</div></div>
+      <div class="card"><div class="net">Daily ~20:47 GMT+7</div><div class="bal" style="font-size:20px">SUI + NEAR</div><div class="note">SUI testnet + devnet, NEAR testnet — official faucets</div></div>
+    </div>
+    <p style="margin-top:18px">Day 1 results (2026-11-17), all verified on-chain:
+    <strong>560 USDC</strong> across 28 networks, <strong>180 EURC</strong> across 9, <strong>0.0002 cirBTC</strong>,
+    <strong>1 + 10 SUI</strong>, <strong>5 NEAR</strong>, <strong>0.05 Sepolia ETH</strong>,
+    <strong>0.01 Robinhood ETH</strong> + test stock tokens.
+    Full research and claim log: <a href="docs/faucet-plan.md">docs/faucet-plan.md</a></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>🎨 The mark</h2>
+    <p class="sub">One snake, coiled into a victory hand. Plain black &amp; white — line and halftone.</p>
+    <div class="duo">
+      <figure><img src="assets/logo-mark.jpg" alt="Venomeum logo, white line art on black"><figcaption>Line</figcaption></figure>
+      <figure><img src="assets/logo-halftone.jpg" alt="Venomeum logo, halftone dots on black"><figcaption>Halftone</figcaption></figure>
+    </div>
+    <div class="frame" style="margin-top:14px"><img src="assets/banner-vmh.jpg" alt="✌ - $VMH · venomeum banner"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>🏷️ Venomeum Names — our on-chain name service</h2>
+    <p class="sub">ENS-style names for Venomeum, ending in <b>.vmh</b>. Each name is a <b>soul-bound NFT</b> — it can never be transferred or sold, it lives with the wallet that registered it. Live on testnets (2026-11-18):</p>
+    <table>
+      <tr><th>Network</th><th>Names contract</th></tr>
+      <tr><td>Arc Testnet</td><td class="addr">0x5a146cC69101e61f1C6700B5C9E781Eb507600A4</td></tr>
+      <tr><td>Robinhood Chain Testnet</td><td class="addr">0x510354Ae30f707CE37Ed2CD484F332df0066A739</td></tr>
+    </table>
+    <p class="sub">First names registered: <b>venom.vmh</b> and <b>venomeum.vmh</b> — resolution (name → address) and reverse lookup (address → primary name) proven on-chain, and a transfer attempt reverts with SOULBOUND, exactly as designed.</p>
+    <h3>🎯 Sniper tool</h3>
+    <p class="sub">A buy → immediately-sell round-trip tool for Venomeum Swap (<span class="mono">tools/sniper.py</span> in the repo): slippage-protected, dry-run mode, testnet-only guardrails. Demoed live — 0.5 USDC → 400,444 VMH → back on Arc, and 0.0002 ETH → 208,766 VMH → back on Robinhood, round-trip cost under 0.5% each.</p>
+    <h3>🌐 Web3 browser — the agent's own dapp connection</h3>
+    <p class="sub">A Chromium browser the agent fully controls via code, with the <b>Phantom</b> wallet loaded and the burner wallet imported — one phrase, both <b>EVM + Solana</b> (Bitget-style multichain). Built 2026-11-19 (<span class="mono">tools/web3-browser-*.js</span> in the repo). Both addresses verified against the burner wallet after import, and the dapp connection test passes on both providers — so wallet-connect faucets and dapp tasks run end to end, no manual steps. Burner / testnet only: the wallet profile and phrase never leave the agent's machine.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>🗺️ Roadmap — $VMH in build</h2>
+    <p class="sub">Plans, honestly labelled. Testnet launches are build progress; mainnet comes later, if ever.</p>
+    <ul>
+      <li>✅ ERC-20 token with burnable tax, automatic buyback, automatic liquidity pool — $VMH, deployed on Arc + Robinhood testnets</li>
+      <li>✅ Own Uniswap V2 pools (Venomeum Swap) with removable liquidity — live on both testnets</li>
+      <li>✅ On-chain sniper tool (buy → immediate sell) — built and demoed live on Venomeum Swap</li>
+      <li>✅ Soul-bound NFTs for name services — shipped as Venomeum Names (.vmh) on Arc + Robinhood testnets</li>
+      <li>✅ Agent-controlled Web3 browser (EVM + Solana) for dapp tasks — built and verified</li>
+      <li>Venomeum Blockchain — the chain itself</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>🐍✌️ <strong style="color:#fff">VENOMEUM</strong> — built by
+    <a href="https://github.com/venomeum">Venom (@venomeum)</a> with venom.muse.</p>
+    <p style="margin-top:6px">Testnet playground. Nothing on this page is financial advice, and testnet tokens have no value.</p>
+  </div>
+</footer>
+
+<script>
+const EVM = "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1";
+const SUI = "0x76f1d8c90078b8f2156818e37836f6ed1cb6c6b4ac0fbeca196c4a2d95a4f914";
+const NEAR = "a561df05cac1f21e047daf000f335cf2844e5fc305ad3453e085fa6b2bbe1fa0";
+const SOL = "AjyRpt4jQ8WkS21J2HreLYHJf72wAWrAiJPWjP2N23Tz";
+function setBal(k, txt){ const el = document.querySelector('[data-bal="'+k+'"]'); if(el) el.innerHTML = txt; }
+function fmt(n, d){ return n.toLocaleString("en-US",{maximumFractionDigits:d}); }
+async function rpc(url, method, params){
+  const r = await fetch(url, {method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({jsonrpc:"2.0", id:1, method, params})});
+  const j = await r.json(); if(j.error) throw new Error(j.error.message||"rpc error"); return j.result;
+}
+async function evmBal(key, url, unit){
+  try{ const wei = await rpc(url, "eth_getBalance", [EVM, "latest"]);
+    setBal(key, fmt(parseInt(wei,16)/1e18, 6) + " <small>"+unit+"</small>");
+  }catch(e){ setBal(key, "— <small>unreachable</small>"); }
+}
+async function suiBal(key, gql){
+  try{ const r = await fetch(gql, {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({query:'{ address(address: "'+SUI+'") { balance(coinType: "0x2::sui::SUI") { totalBalance } } }'})});
+    const j = await r.json(); const raw = j.data.address.balance.totalBalance;
+    setBal(key, fmt(Number(raw)/1e9, 4) + " <small>SUI</small>");
+  }catch(e){ setBal(key, "— <small>unreachable</small>"); }
+}
+async function nearBal(){
+  try{ const res = await rpc("https://rpc.testnet.near.org", "query",
+      {request_type:"view_account", account_id:NEAR, finality:"final"});
+    setBal("near", fmt(parseFloat(res.amount)/1e24, 4) + " <small>NEAR</small>");
+  }catch(e){ setBal("near", "— <small>unreachable</small>"); }
+}
+async function solBal(){
+  try{ const res = await rpc("https://api.devnet.solana.com", "getBalance", [SOL]);
+    setBal("solana", fmt(res.value/1e9, 4) + " <small>SOL</small>");
+  }catch(e){ setBal("solana", "— <small>unreachable</small>"); }
+}
+async function robinBal(){
+  try{ const r = await fetch("https://explorer.testnet.chain.robinhood.com/api/v2/addresses/"+EVM);
+    const j = await r.json();
+    setBal("robinhood", fmt(parseInt(j.coin_balance)/1e18, 6) + " <small>ETH</small>");
+  }catch(e){ setBal("robinhood", "— <small>unreachable</small>"); }
+}
+evmBal("sepolia", "https://ethereum-sepolia-rpc.publicnode.com", "ETH");
+evmBal("arc", "https://rpc.testnet.arc.network", "USDC");
+suiBal("sui-testnet", "https://graphql.testnet.sui.io/graphql");
+suiBal("sui-devnet", "https://graphql.devnet.sui.io/graphql");
+nearBal(); solBal(); robinBal();
+document.querySelectorAll("button.copy").forEach(b => b.addEventListener("click", async () => {
+  try{ await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied ✓";
+    setTimeout(() => b.textContent = "Copy", 1500); }catch(e){}
+}));
+</script>
+</body>
+</html>
