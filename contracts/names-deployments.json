@@ -1,0 +1,70 @@
+{
+  "Arc Testnet": {
+    "chain": "Arc Testnet",
+    "chain_id": 5042002,
+    "contract": "0x5a146cC69101e61f1C6700B5C9E781Eb507600A4",
+    "deploy_tx": "0xa5c08a36ddf4c21119161bf59b16348be0942067570965c8ad06f4d9142ee91d",
+    "deploy_gas_used": 1804224,
+    "deployer": "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1",
+    "name": "Venomeum Names",
+    "symbol": "VNAME",
+    "registered": {
+      "venom": {
+        "token_id": 1,
+        "register_tx": "0xf34ce2efc15ac77a5677232d0d31f6b0949a6e22b06bccfe2723255937001ea0"
+      },
+      "venomeum": {
+        "token_id": 2,
+        "register_tx": "0x73dbdd9f225046bda5cc05a739e663206b19245d25173680b5be701b787fbdf5"
+      }
+    },
+    "proofs": {
+      "transfer_reverts": true,
+      "transfer_error": "('execution reverted: SOULBOUND', '0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000009534f554c424f554e440000000000000000000000000000000000000000000000')",
+      "approve_reverts": true,
+      "resolve_venom": "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1",
+      "primary_name_of_burner": "venom.vmh",
+      "owner_of_venom_token": "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1",
+      "total_names": 2,
+      "balance_of_burner": 2,
+      "resolve_unregistered": "0x0000000000000000000000000000000000000000",
+      "token_uri_name": "venom.vmh",
+      "token_uri_svg_contains_name": true
+    },
+    "explorer_tx": "https://testnet.arcscan.app/tx/0xa5c08a36ddf4c21119161bf59b16348be0942067570965c8ad06f4d9142ee91d"
+  },
+  "Robinhood Chain Testnet": {
+    "chain": "Robinhood Chain Testnet",
+    "chain_id": 46630,
+    "contract": "0x510354Ae30f707CE37Ed2CD484F332df0066A739",
+    "deploy_tx": "0x2d7c38f827952663710f78b95ed74b0ef8449e5df24e4aace7d9409e5cc58d66",
+    "deploy_gas_used": 1804224,
+    "deployer": "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1",
+    "name": "Venomeum Names",
+    "symbol": "VNAME",
+    "registered": {
+      "venom": {
+        "token_id": 1,
+        "register_tx": "0x8c9efb2813ab2d06156312d8dbcbc82c28b686b389c233ea3f547efcc50ab6be"
+      },
+      "venomeum": {
+        "token_id": 2,
+        "register_tx": "0xbb44c2e4c3622cab0d7c6f885439cec3ff3f5762fb2eb964aa427160db234213"
+      }
+    },
+    "proofs": {
+      "transfer_reverts": true,
+      "transfer_error": "('execution reverted: SOULBOUND', '0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000009534f554c424f554e440000000000000000000000000000000000000000000000')",
+      "approve_reverts": true,
+      "resolve_venom": "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1",
+      "primary_name_of_burner": "venom.vmh",
+      "owner_of_venom_token": "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1",
+      "total_names": 2,
+      "balance_of_burner": 2,
+      "resolve_unregistered": "0x0000000000000000000000000000000000000000",
+      "token_uri_name": "venom.vmh",
+      "token_uri_svg_contains_name": true
+    },
+    "explorer_tx": "https://explorer.testnet.chain.robinhood.com/tx/0x2d7c38f827952663710f78b95ed74b0ef8449e5df24e4aace7d9409e5cc58d66"
+  }
+}
