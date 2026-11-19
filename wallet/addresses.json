@@ -1,0 +1,49 @@
+{
+  "wallet_name": "Venomeum Multichain Burner Wallet - PUBLIC ADDRESSES ONLY (safe to share)",
+  "created_utc": "2026-11-17T14:08:35Z",
+  "addresses": {
+    "bitcoin_mainnet_segwit": {
+      "chain": "Bitcoin (mainnet, Native SegWit)",
+      "derivation_path": "m/84'/0'/0'/0/0",
+      "address": "bc1qq57cleey4qzft3c3f75fjgzqwsew3zegms8xuk"
+    },
+    "bitcoin_testnet_segwit": {
+      "chain": "Bitcoin (testnet, Native SegWit)",
+      "derivation_path": "m/84'/1'/0'/0/0",
+      "address": "tb1qwgxdcqsz0pkemd4evdx7f5rls3v6fasehr35qr"
+    },
+    "evm_all_chains": {
+      "chain": "All EVM chains (Ethereum, Base, BSC, Polygon, Arbitrum, Optimism, Avalanche, Arc, zkSync, Linea, Scroll + all EVM testnets e.g. Sepolia, Base Sepolia, Arc Testnet)",
+      "derivation_path": "m/44'/60'/0'/0/0",
+      "address": "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1"
+    },
+    "tron": {
+      "chain": "TRON (mainnet + Nile/Shasta testnets, same key)",
+      "derivation_path": "m/44'/195'/0'/0/0",
+      "address": "TUwbQWXrcVjhmXfNr3D44zgvib9gV6cH26"
+    },
+    "solana": {
+      "chain": "Solana (mainnet + devnet/testnet, same keypair)",
+      "derivation_path": "m/44'/501'/0'/0'",
+      "address": "AjyRpt4jQ8WkS21J2HreLYHJf72wAWrAiJPWjP2N23Tz"
+    },
+    "sui": {
+      "chain": "SUI (mainnet + testnet/devnet, same key)",
+      "derivation_path": "m/44'/784'/0'/0'/0'",
+      "address": "0x76f1d8c90078b8f2156818e37836f6ed1cb6c6b4ac0fbeca196c4a2d95a4f914"
+    },
+    "near": {
+      "chain": "NEAR Protocol (implicit account; same key on testnet)",
+      "derivation_path": "m/44'/397'/0'/0'/0'",
+      "address": "a561df05cac1f21e047daf000f335cf2844e5fc305ad3453e085fa6b2bbe1fa0"
+    },
+    "ton": {
+      "chain": "TON / GRAM (mainnet Wallet V4, non-bounceable address shown; same key works on testnet)",
+      "derivation_path": "m/44'/607'/0'/0'/0'",
+      "address": "UQAyzCfLeYKY08QLXm7ZvZGzyaggRCJp-nw3JmVub2qpxJWI",
+      "address_testnet_non_bounceable": "0QAyzCfLeYKY08QLXm7ZvZGzyaggRCJp-nw3JmVub2qpxC4C",
+      "address_testnet_bounceable": "kQAyzCfLeYKY08QLXm7ZvZGzyaggRCJp-nw3JmVub2qpxHPH",
+      "note": "Use the testnet-form address for TON testnet faucets (e.g. @testgiver_ton_bot); same key as mainnet."
+    }
+  }
+}
