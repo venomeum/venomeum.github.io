@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VENOMEUM NFT — Mint</title>
+<meta name="description" content="Mint Venomeum NFT (VNFT) — the Venomeum collection. Paid public mint on Arc Testnet and Robinhood Chain Testnet, on-chain SVG art, 5% creator royalty. Testnet for now — play money.">
+<link rel="icon" href="assets/logo-mark.jpg">
+<style>
+  :root{--bg:#000;--panel:#0d0d0f;--line:#232326;--txt:#f5f5f5;--dim:#9c9ca3;--acc:#fff}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+  a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  header{padding:48px 0 38px;text-align:center;border-bottom:1px solid var(--line)}
+  header img.mark{width:min(220px,60vw);height:auto;display:block;margin:0 auto}
+  .vmh{font-size:clamp(40px,9vw,72px);font-weight:800;letter-spacing:1px;line-height:1.05;margin-top:8px}
+  .vmh .hand{font-size:.62em;vertical-align:.08em}
+  .venomeum{color:var(--dim);font-size:clamp(20px,5vw,32px);font-weight:300;letter-spacing:6px;margin-top:2px}
+  .tag{color:var(--dim);max-width:580px;margin:18px auto 0}
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:24px;margin-bottom:6px}
+  .sub{color:var(--dim);margin-bottom:20px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .warn{background:#12100a;border:1px solid #4d3f06;color:#fde68a;border-radius:12px;padding:14px 18px;font-size:14px}
+  .addr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;word-break:break-all}
+  .nets{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+  button.net{background:#17171a;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:10px 16px;cursor:pointer;font-size:14px;font-weight:600}
+  button.net:hover{border-color:#fff}
+  button.net.sel{background:#fff;color:#000;border-color:#fff}
+  button.net.soon{opacity:.45;cursor:not-allowed}
+  button.net .soon-tag{display:block;font-size:11px;font-weight:400;letter-spacing:.4px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:18px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+  .stat .k{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+  .stat .v{font-size:24px;font-weight:700;margin-top:2px}
+  .stat .v small{font-size:13px;color:var(--dim);font-weight:600}
+  .row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .qty{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .qty button{background:#17171a;color:var(--txt);border:0;width:42px;height:44px;font-size:20px;cursor:pointer}
+  .qty button:hover{background:#232326}
+  .qty input{width:56px;height:44px;background:var(--panel);border:0;color:var(--txt);text-align:center;font-size:17px;font-weight:700}
+  button.big{background:#fff;color:#000;border:0;border-radius:10px;padding:12px 26px;font-size:16px;font-weight:800;cursor:pointer}
+  button.big:hover{background:#dcdcdc}
+  button.big:disabled{opacity:.4;cursor:not-allowed}
+  button.ghost{background:#17171a;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:11px 20px;font-size:15px;font-weight:600;cursor:pointer}
+  button.ghost:hover{border-color:#fff}
+  .msg{margin-top:16px;font-size:14px;min-height:22px;word-break:break-word}
+  .msg.err{color:#fca5a5}
+  .msg.ok{color:#86efac}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .nft{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .nft img{width:100%;display:block;background:#000}
+  .nft .cap{padding:10px 14px;font-size:14px}
+  .nft .cap span{color:var(--dim)}
+  footer{padding:34px 0 54px;text-align:center;color:var(--dim);font-size:14px}
+  .back{font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img class="mark" src="assets/logo-mark.jpg" alt="Venomeum mark — a snake coiled into a victory hand">
+    <div class="vmh"><span class="hand">✌</span> VENOMEUM NFT</div>
+    <div class="venomeum">venomeum</div>
+    <p class="tag">The Venomeum collection — <strong style="color:#fff">VNFT</strong>. One snake, coiled into a
+    victory hand, minted on-chain. Fully on-chain SVG art (no IPFS, no server), a 10,000-piece cap,
+    and a 5% creator royalty on secondary sales. Mint proceeds go to the Venomeum treasury wallet.</p>
+    <p style="margin-top:14px"><a class="back" href="index.html">← Back to venomeum.github.io</a></p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="warn">🧪 <strong>Testnet for now — play money.</strong> Minting is live on Arc Testnet and
+    Robinhood Chain Testnet only. Testnet tokens have no real-world value; you pay with testnet funds from
+    faucets. <strong>Mainnet (Base + Ethereum) is not deployed yet</strong> — it appears in the network
+    switcher below as “coming soon” so nobody mistakes it for live.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>🖼️ Mint</h2>
+    <p class="sub">Pick a network, connect any EVM wallet, choose a quantity, mint. Prices and supply are
+    read live from the contract — no wallet needed just to look.</p>
+
+    <div class="nets" id="nets"></div>
+    <p class="sub" id="netNote" style="margin-bottom:14px"></p>
+
+    <div class="stats">
+      <div class="stat"><div class="k">Contract</div><div class="v addr" id="stContract" style="font-size:12.5px;font-weight:400;padding-top:6px">…</div></div>
+      <div class="stat"><div class="k">Mint price</div><div class="v" id="stPrice">…</div></div>
+      <div class="stat"><div class="k">Minted</div><div class="v" id="stMinted">…</div></div>
+      <div class="stat"><div class="k">Remaining</div><div class="v" id="stLeft">…</div></div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <div class="row">
+          <button class="ghost" id="btnConnect">Connect wallet</button>
+          <span class="addr" id="acctLabel" style="color:var(--dim)">not connected</span>
+        </div>
+        <div class="row">
+          <div class="qty">
+            <button id="qMinus" aria-label="decrease quantity">−</button>
+            <input id="qInput" type="number" min="1" max="10" value="1">
+            <button id="qPlus" aria-label="increase quantity">+</button>
+          </div>
+          <div style="font-size:15px">Total: <strong id="totalLabel">…</strong></div>
+          <button class="big" id="btnMint" disabled>Mint</button>
+        </div>
+      </div>
+      <div class="msg" id="msg"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>🎒 Your NFTs</h2>
+    <p class="sub" id="yoursSub">Connect a wallet to see the VNFTs it holds on the selected network.
+    Artwork is rendered straight from each token's on-chain <span class="addr">tokenURI</span>.</p>
+    <div class="grid" id="yoursGrid"></div>
+    <p class="sub" id="yoursEmpty">Nothing to show yet.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>🐍✌️ <strong style="color:#fff">VENOMEUM</strong> — built by
+    <a href="https://github.com/venomeum">Venom (@venomeum)</a> with venom.muse.</p>
+    <p style="margin-top:6px">Testnet playground. Nothing on this page is financial advice, and testnet tokens have no value.</p>
+  </div>
+</footer>
+
+<script>
+/* ================= Network config =================
+   One object per network. To launch a mainnet later: set its `contract`
+   address and flip `live` to true — nothing else changes. */
+const NETWORKS = [
+  {
+    key: "arc-testnet",
+    name: "Arc Testnet",
+    short: "Arc",
+    chainId: 5042002,
+    rpc: "https://rpc.testnet.arc.network",
+    explorer: "https://testnet.arcscan.app",
+    currency: { name: "USD Coin", symbol: "USDC", decimals: 18 },
+    contract: "0xFE4eb329E4FA92b8869aF1dC31Aa7afB7170fA52",
+    live: true
+  },
+  {
+    key: "robinhood-testnet",
+    name: "Robinhood Chain Testnet",
+    short: "Robinhood",
+    chainId: 46630,
+    rpc: "https://rpc.testnet.chain.robinhood.com",
+    explorer: "https://explorer.testnet.chain.robinhood.com",
+    currency: { name: "Ether", symbol: "ETH", decimals: 18 },
+    contract: "0x7221c9BF75F299e70159d24D2d663DF15cCE6d7b",
+    live: true
+  },
+  {
+    key: "base-mainnet",
+    name: "Base Mainnet",
+    short: "Base",
+    chainId: 8453,
+    rpc: "https://mainnet.base.org",
+    explorer: "https://basescan.org",
+    currency: { name: "Ether", symbol: "ETH", decimals: 18 },
+    contract: null,           // mainnet contracts not deployed yet
+    live: false
+  },
+  {
+    key: "ethereum-mainnet",
+    name: "Ethereum Mainnet",
+    short: "Ethereum",
+    chainId: 1,
+    rpc: "https://ethereum-rpc.publicnode.com",
+    explorer: "https://etherscan.io",
+    currency: { name: "Ether", symbol: "ETH", decimals: 18 },
+    contract: null,           // mainnet contracts not deployed yet
+    live: false
+  }
+];
+
+/* ============ Contract interface (selectors) ============ */
+const SEL = {
+  mintPrice:   "0x6817c76c",
+  totalMinted: "0xa2309ff8",
+  maxSupply:   "0xd5abeb01",
+  balanceOf:   "0x70a08231",
+  ownerOf:     "0x6352211e",
+  tokenURI:    "0xc87b56dd",
+  mint:        "0xa0712d68"
+};
+const TRANSFER_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+const MAX_PER_TX = 10;
+
+/* ================= State ================= */
+let net = NETWORKS[0];
+let account = null;
+let priceWei = null;      // BigInt
+let mintedCount = null;   // number
+let maxSupplyCount = null;
+
+/* ================= Helpers ================= */
+const $ = id => document.getElementById(id);
+function hexChain(id){ return "0x" + id.toString(16); }
+function padAddr(a){ return "0x" + "0".repeat(24) + a.replace(/^0x/i,"").toLowerCase(); }
+function padUint(n){ return "0x" + BigInt(n).toString(16).padStart(64, "0"); }
+function fmtUnits(wei, symbol){
+  if (wei === null || wei === undefined) return "…";
+  const w = BigInt(wei), scale = 10n ** 18n;
+  const whole = w / scale, frac = (w % scale).toString().padStart(18, "0").replace(/0+$/, "");
+  return (frac ? whole.toString() + "." + frac : whole.toString()) + " " + symbol;
+}
+function fmtInt(n){ return n === null || n === undefined ? "…" : Number(n).toLocaleString("en-US"); }
+function setMsg(text, kind){
+  const m = $("msg"); m.textContent = text || ""; m.className = "msg" + (kind ? " " + kind : "");
+}
+async function rpc(url, method, params){
+  const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message || "RPC error");
+  return j.result;
+}
+async function ethCall(to, data){ return rpc(net.rpc, "eth_call", [{ to, data }, "latest"]); }
+function decodeUint(hex){ return BigInt(hex); }
+function decodeString(hex){
+  const h = hex.replace(/^0x/, "");
+  const len = Number(BigInt("0x" + h.slice(64, 128)));
+  const bytes = [];
+  for (let i = 0; i < len; i++) bytes.push(parseInt(h.slice(128 + i * 2, 130 + i * 2), 16));
+  return new TextDecoder().decode(new Uint8Array(bytes));
+}
+function shortAddr(a){ return a.slice(0, 6) + "…" + a.slice(-4); }
+
+/* ================= Stats ================= */
+async function refreshStats(){
+  if (!net.live || !net.contract){
+    $("stContract").textContent = "— not deployed —";
+    $("stPrice").textContent = "—"; $("stMinted").textContent = "—"; $("stLeft").textContent = "—";
+    $("totalLabel").textContent = "—";
+    return;
+  }
+  $("stContract").innerHTML = "";
+  const link = document.createElement("a");
+  link.href = net.explorer + "/address/" + net.contract;
+  link.target = "_blank"; link.rel = "noopener";
+  link.textContent = net.contract;
+  $("stContract").appendChild(link);
+  try {
+    const [p, m, s] = await Promise.all([
+      ethCall(net.contract, SEL.mintPrice),
+      ethCall(net.contract, SEL.totalMinted),
+      ethCall(net.contract, SEL.maxSupply)
+    ]);
+    priceWei = decodeUint(p);
+    mintedCount = Number(decodeUint(m));
+    maxSupplyCount = Number(decodeUint(s));
+    $("stPrice").innerHTML = fmtUnits(priceWei, net.currency.symbol);
+    $("stMinted").innerHTML = fmtInt(mintedCount) + " <small>/ " + fmtInt(maxSupplyCount) + "</small>";
+    $("stLeft").textContent = fmtInt(maxSupplyCount - mintedCount);
+  } catch (e) {
+    $("stPrice").textContent = "unreachable"; $("stMinted").textContent = "—"; $("stLeft").textContent = "—";
+    priceWei = null;
+  }
+  updateTotal();
+}
+function qty(){
+  let q = parseInt($("qInput").value, 10);
+  if (isNaN(q)) q = 1;
+  return Math.min(MAX_PER_TX, Math.max(1, q));
+}
+function updateTotal(){
+  if (priceWei === null) { $("totalLabel").textContent = "…"; return; }
+  $("totalLabel").textContent = fmtUnits(priceWei * BigInt(qty()), net.currency.symbol);
+}
+
+/* ================= Network switcher ================= */
+function renderNets(){
+  const box = $("nets"); box.innerHTML = "";
+  NETWORKS.forEach(n => {
+    const b = document.createElement("button");
+    b.className = "net" + (n.key === net.key ? " sel" : "") + (n.live ? "" : " soon");
+    if (n.live) {
+      b.textContent = n.name;
+    } else {
+      b.innerHTML = n.name + '<span class="soon-tag">MAINNET — COMING SOON</span>';
+    }
+    b.addEventListener("click", () => selectNet(n));
+    box.appendChild(b);
+  });
+  $("netNote").textContent = net.live
+    ? net.name + " · chainId " + net.chainId + " · contract live — minting open."
+    : net.name + " · chainId " + net.chainId + " · Mainnet — coming soon: mainnet contracts not deployed yet, minting is disabled here. Switch to a testnet to mint.";
+  $("btnMint").disabled = !(net.live && account);
+  refreshStats();
+  renderYours();
+}
+function selectNet(n){ net = n; renderNets(); }
+
+/* ================= Wallet ================= */
+function hasWallet(){ return typeof window.ethereum !== "undefined"; }
+async function ensureChain(){
+  const want = hexChain(net.chainId);
+  const cur = await window.ethereum.request({ method: "eth_chainId" });
+  if (cur.toLowerCase() === want.toLowerCase()) return;
+  try {
+    await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: want }] });
+  } catch (e) {
+    if (e.code === 4902) {
+      await window.ethereum.request({ method: "wallet_addEthereumChain", params: [{
+        chainId: want,
+        chainName: net.name,
+        nativeCurrency: net.currency,
+        rpcUrls: [net.rpc],
+        blockExplorerUrls: [net.explorer]
+      }] });
+    } else { throw e; }
+  }
+}
+async function connect(){
+  if (!hasWallet()) {
+    setMsg("No EVM wallet found in this browser. Install MetaMask, Phantom, Rabby or another injected wallet, then try again.", "err");
+    return;
+  }
+  try {
+    const accts = await window.ethereum.request({ method: "eth_requestAccounts" });
+    account = accts && accts[0] ? accts[0] : null;
+    if (!account) { setMsg("Wallet returned no account.", "err"); return; }
+    $("acctLabel").textContent = shortAddr(account);
+    $("btnConnect").textContent = "Connected";
+    if (net.live) {
+      try { await ensureChain(); }
+      catch (e) { setMsg("Connected, but switching to " + net.name + " was rejected. Switch networks in your wallet to mint.", "err"); }
+    }
+    $("btnMint").disabled = !net.live;
+    setMsg("Wallet connected on " + net.name + ".", "ok");
+    renderYours();
+  } catch (e) {
+    setMsg(e.code === 4001 ? "Connection rejected in the wallet." : ("Connect failed: " + (e.message || e)), "err");
+  }
+}
+
+/* ================= Mint ================= */
+async function doMint(){
+  if (!account) { setMsg("Connect your wallet first.", "err"); return; }
+  if (!net.live || !net.contract) { setMsg("Minting is not live on " + net.name + " yet — mainnet contracts not deployed yet.", "err"); return; }
+  if (priceWei === null) { setMsg("Could not read the mint price from the contract. Try again in a moment.", "err"); return; }
+  const q = qty();
+  if (mintedCount !== null && maxSupplyCount !== null && mintedCount + q > maxSupplyCount) {
+    setMsg("Only " + (maxSupplyCount - mintedCount) + " left in the supply — lower the quantity.", "err"); return;
+  }
+  const btn = $("btnMint"); btn.disabled = true;
+  try {
+    await ensureChain();
+    const value = priceWei * BigInt(q);
+    const data = SEL.mint + BigInt(q).toString(16).padStart(64, "0");
+    setMsg("Confirm the mint in your wallet…");
+    const hash = await window.ethereum.request({ method: "eth_sendTransaction", params: [{
+      from: account, to: net.contract, value: "0x" + value.toString(16), data
+    }] });
+    setMsg("Mint sent — waiting for confirmation… tx " + hash);
+    let receipt = null;
+    for (let i = 0; i < 60 && !receipt; i++) {
+      receipt = await rpc(net.rpc, "eth_getTransactionReceipt", [hash]);
+      if (!receipt) await new Promise(r => setTimeout(r, 2000));
+    }
+    const url = net.explorer + "/tx/" + hash;
+    if (receipt && receipt.status === "0x1") {
+      $("msg").innerHTML = "";
+      const span = document.createElement("span"); span.className = "";
+      span.textContent = "✅ Minted " + q + " VNFT! Tx: ";
+      const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = hash;
+      $("msg").appendChild(span); $("msg").appendChild(a);
+      $("msg").className = "msg ok";
+    } else if (receipt) {
+      setMsg("Transaction failed on-chain (reverted). Tx: " + hash + " — see " + url, "err");
+    } else {
+      setMsg("Still confirming — check your tx here: " + url, "");
+    }
+    await refreshStats();
+    renderYours();
+  } catch (e) {
+    if (e.code === 4001) setMsg("Mint rejected in the wallet — nothing was sent.", "err");
+    else if (e.code === -32000 || /insufficient funds/i.test(e.message || "")) setMsg("Insufficient funds: you need " + fmtUnits(priceWei * BigInt(q), net.currency.symbol) + " plus gas on " + net.name + ". Grab testnet funds from a faucet first.", "err");
+    else setMsg("Mint failed: " + (e.message || e), "err");
+  } finally {
+    btn.disabled = !net.live;
+  }
+}
+
+/* ================= Your NFTs ================= */
+async function ownedTokenIds(addr){
+  // Preferred: Transfer events to this address, then confirm current ownership.
+  try {
+    const logs = await rpc(net.rpc, "eth_getLogs", [{
+      address: net.contract, fromBlock: "0x0", toBlock: "latest",
+      topics: [TRANSFER_TOPIC, null, padAddr(addr)]
+    }]);
+    const ids = [...new Set(logs.map(l => Number(BigInt(l.topics[3]))))];
+    const owned = [];
+    for (const id of ids) {
+      try {
+        const o = await ethCall(net.contract, SEL.ownerOf + BigInt(id).toString(16).padStart(64, "0"));
+        if (("0x" + o.slice(-40)).toLowerCase() === addr.toLowerCase()) owned.push(id);
+      } catch (e) { /* token may have been burned */ }
+    }
+    return owned.sort((a, b) => a - b);
+  } catch (e) {
+    // Fallback: scan ownerOf across minted ids (fine while the collection is young).
+    const total = mintedCount !== null ? mintedCount : Number(decodeUint(await ethCall(net.contract, SEL.totalMinted)));
+    const owned = [];
+    for (let id = 1; id <= total; id++) {
+      try {
+        const o = await ethCall(net.contract, SEL.ownerOf + BigInt(id).toString(16).padStart(64, "0"));
+        if (("0x" + o.slice(-40)).toLowerCase() === addr.toLowerCase()) owned.push(id);
+      } catch (e) { /* skip */ }
+    }
+    return owned;
+  }
+}
+async function renderYours(){
+  const grid = $("yoursGrid"), empty = $("yoursEmpty");
+  grid.innerHTML = "";
+  if (!net.live || !net.contract) { empty.textContent = "Mainnet — coming soon. Switch to a testnet to view NFTs."; return; }
+  if (!account) { empty.textContent = "Nothing to show yet — connect a wallet."; return; }
+  empty.textContent = "Loading your NFTs on " + net.name + "…";
+  try {
+    const bal = Number(decodeUint(await ethCall(net.contract, SEL.balanceOf + padAddr(account).slice(2))));
+    if (bal === 0) { empty.textContent = "This wallet holds no VNFT on " + net.name + " yet. Mint your first one above!"; return; }
+    const ids = await ownedTokenIds(account);
+    if (!ids.length) { empty.textContent = "Balance shows " + bal + " VNFT, but token IDs could not be enumerated from this RPC. Try again shortly."; return; }
+    empty.textContent = "";
+    for (const id of ids) {
+      const card = document.createElement("div"); card.className = "nft";
+      const img = document.createElement("img"); img.alt = "Venomeum NFT #" + id;
+      const cap = document.createElement("div"); cap.className = "cap";
+      cap.innerHTML = "Venomeum NFT <span>#" + id + "</span>";
+      card.appendChild(img); card.appendChild(cap); grid.appendChild(card);
+      try {
+        const uri = decodeString(await ethCall(net.contract, SEL.tokenURI + BigInt(id).toString(16).padStart(64, "0")));
+        const meta = JSON.parse(atob(uri.split(",")[1]));
+        img.src = meta.image;
+        if (meta.name) cap.innerHTML = meta.name.replace(" #", " <span>#") + "</span>";
+      } catch (e) {
+        cap.innerHTML = "Venomeum NFT <span>#" + id + "</span> — art failed to load";
+      }
+    }
+  } catch (e) {
+    empty.textContent = "Could not load your NFTs (" + (e.message || e) + ").";
+  }
+}
+
+/* ================= Wire up ================= */
+$("btnConnect").addEventListener("click", connect);
+$("btnMint").addEventListener("click", doMint);
+$("qMinus").addEventListener("click", () => { $("qInput").value = qty() - 1; updateTotal(); });
+$("qPlus").addEventListener("click", () => { $("qInput").value = qty() + 1; updateTotal(); });
+$("qInput").addEventListener("change", () => { $("qInput").value = qty(); updateTotal(); });
+if (hasWallet()) {
+  window.ethereum.on && window.ethereum.on("accountsChanged", a => {
+    account = a && a[0] ? a[0] : null;
+    $("acctLabel").textContent = account ? shortAddr(account) : "not connected";
+    $("btnConnect").textContent = account ? "Connected" : "Connect wallet";
+    $("btnMint").disabled = !(net.live && account);
+    renderYours();
+  });
+  window.ethereum.on && window.ethereum.on("chainChanged", () => { refreshStats(); renderYours(); });
+}
+renderNets();
+</script>
+</body>
+</html>
