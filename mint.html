@@ -126,6 +126,18 @@
   </div>
 </section>
 
+<section>
+  <div class="wrap">
+    <h2>🧪 Concept Modules — Testnet Prototypes</h2>
+    <p class="sub">Four original Venomeum mechanics, deployed and proven on-chain as separate
+    testnet modules (design spec: <span class="addr">venomeum-nft-concepts</span>). Every mint is
+    <strong style="color:#fff">free</strong> — the only charge is a tiny fixed mint fee, split inside
+    each contract. They follow the network selected above and use the wallet connected above.
+    Testnet only — play money, no mainnet version exists yet.</p>
+    <div class="grid" id="moduleGrid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))"></div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <p>🐍✌️ <strong style="color:#fff">VENOMEUM</strong> — built by
@@ -473,6 +485,242 @@ if (hasWallet()) {
   window.ethereum.on && window.ethereum.on("chainChanged", () => { refreshStats(); renderYours(); });
 }
 renderNets();
+</script>
+
+<script>
+/* ================= Concept modules (testnet prototypes) =================
+   Four modules sharing the page's selected network + connected wallet.
+   Contracts exist ONLY on the two testnets; on a mainnet selection the
+   cards disable themselves. All reads are live eth_calls. */
+const u256 = n => BigInt(n).toString(16).padStart(64, "0");
+const MSEL = {
+  mintFee: "0x13966db5", totalMinted: "0xa2309ff8", maxSupply: "0xd5abeb01",
+  balanceOf: "0x70a08231", mint: "0xa0712d68",
+  reserveBalance: "0xa10954fe", venomOf: "0x938b63a3", claim: "0x379607f5",
+  awakenedCount: "0xf0a133e3", awaken: "0x38b85495", isAwakened: "0x6b5d1954",
+  fusionFundBalance: "0xa43b3060", halvesMinted: "0x44c6dae2",
+  fullSignsMinted: "0x6716c0b6", fuse: "0xf68858e4",
+  pairOf: "0x1d1c5088", isFullSign: "0x5c9264f8",
+  poolBalance: "0x96365d44", solved: "0x799320bb", guessFee: "0xa0d9afc5",
+  solve: "0x76fe1e92", fragmentOf: "0x0108d530"
+};
+const MODULES = [
+  {
+    key: "sac", name: "Venom Sac", symbol: "VSAC",
+    hook: "Fills with venom while held untouched — any transfer empties the sac. Claim venom as $VMH.",
+    contracts: {
+      "arc-testnet": "0x7648B5c62E22e81b2D03115cD30739eC3Ad039eA",
+      "robinhood-testnet": "0xcd0Dfef3782d0E702f771fccA5498259a7647d21"
+    },
+    stat: async (c) => "VMH reserve: " + fmtUnits(decodeUint(await ethCall(c, MSEL.reserveBalance)), "VMH"),
+    action: { label: "Token ID", input2: null, btn: "Check venom & claim", run: async (mod, c, v1) => {
+      const venom = decodeUint(await ethCall(c, MSEL.venomOf + u256(v1)));
+      mod.note("Token #" + v1 + " holds " + fmtUnits(venom, "VMH") + " of venom. Claiming sends it to the token owner…");
+      await modSend(c, MSEL.claim + u256(v1), 0n, mod);
+    }}
+  },
+  {
+    key: "cosign", name: "Co-Sign", symbol: "COSIGN",
+    hook: "Mints dormant. A second wallet awakens it and earns a soulbound Witness Badge.",
+    contracts: {
+      "arc-testnet": "0x73b547D0F8E1a92094257EEA741Ba0FB32fBCDf2",
+      "robinhood-testnet": "0xD936eC5a3443843e630012A12A4A89be9dbBF753"
+    },
+    extra: {
+      "arc-testnet": ["Witness Badge", "0x1F391D82700bab5b81050c9Fdf978d3248DDB520"],
+      "robinhood-testnet": ["Witness Badge", "0x3eDA35389077D59811D3277c6bBD5cBAcC51CB96"]
+    },
+    stat: async (c) => "Awakened: " + fmtInt(Number(decodeUint(await ethCall(c, MSEL.awakenedCount)))),
+    action: { label: "Token ID", input2: null, btn: "Awaken", run: async (mod, c, v1) => {
+      const awake = decodeUint(await ethCall(c, MSEL.isAwakened + u256(v1)));
+      if (awake === 1n) { mod.note("Token #" + v1 + " is already awakened.", "err"); return; }
+      mod.note("Awakening token #" + v1 + " — you must NOT be its owner; you earn a Witness Badge…");
+      await modSend(c, MSEL.awaken + u256(v1), 0n, mod);
+    }}
+  },
+  {
+    key: "fingers", name: "Two Fingers", symbol: "FINGERS",
+    hook: "Your NFT is half a victory — the other half starts in a stranger's wallet. Hold both halves of a pair and fuse them into a Full Sign (fusion pays a rebate).",
+    contracts: {
+      "arc-testnet": "0x5a29D12617640570a252B52FFc56020FEA148d3E",
+      "robinhood-testnet": "0x1eF5A5b91E2e9b93297D89BaF48Ed1E278143de0"
+    },
+    stat: async (c) => {
+      const [h, f, fund] = await Promise.all([
+        ethCall(c, MSEL.halvesMinted), ethCall(c, MSEL.fullSignsMinted), ethCall(c, MSEL.fusionFundBalance)]);
+      return "Halves: " + fmtInt(Number(decodeUint(h))) + " · Full Signs: " + fmtInt(Number(decodeUint(f))) +
+             " · Fusion Fund: " + fmtUnits(decodeUint(fund), net.currency.symbol);
+    },
+    action: { label: "Half A ID", input2: "Half B ID", btn: "Fuse pair", run: async (mod, c, v1, v2) => {
+      const [p1, p2] = await Promise.all([
+        ethCall(c, MSEL.pairOf + u256(v1)), ethCall(c, MSEL.pairOf + u256(v2))]);
+      if (decodeUint(p1) !== decodeUint(p2)) { mod.note("Tokens #" + v1 + " and #" + v2 + " are not a pair (pairs " + decodeUint(p1) + " and " + decodeUint(p2) + ").", "err"); return; }
+      mod.note("Fusing pair " + decodeUint(p1) + " — both halves burn, one Full Sign mints, rebate pays out…");
+      await modSend(c, MSEL.fuse + u256(v1) + BigInt(v2).toString(16).padStart(64, "0"), 0n, mod);
+    }}
+  },
+  {
+    key: "cipher", name: "Halftone Cipher", symbol: "CIPHER",
+    hook: "Each token carries a fragment of a hidden phrase in its dots. First holder to assemble and solve it wins the bounty pool.",
+    contracts: {
+      "arc-testnet": "0x7AD28EBC36e5E101CDDD0FA5f2634Bd7524B1780",
+      "robinhood-testnet": "0x096c41954841fFcD3a7d5F42094f614aDd02Fd04"
+    },
+    extra: {
+      "arc-testnet": ["Cipher Bounty", "0xC2874498945F2F757eE194936B284335E111B0b5"],
+      "robinhood-testnet": ["Cipher Bounty", "0x72dd966A1D6C0c24D5865c97024b2447c856B277"]
+    },
+    stat: async (c, mod) => {
+      const b = mod.extra[net.key][1];
+      const [pool, solved] = await Promise.all([ethCall(b, MSEL.poolBalance), ethCall(b, MSEL.solved)]);
+      return "Bounty pool: " + fmtUnits(decodeUint(pool), net.currency.symbol) +
+             (decodeUint(solved) === 1n ? " · SOLVED ✔ (testnet proof hunt)" : " · unsolved");
+    },
+    action: { label: "Your phrase guess", input2: null, wide: true, btn: "Solve (pays guess fee)", run: async (mod, c, v1) => {
+      const b = mod.extra[net.key][1];
+      const gf = decodeUint(await ethCall(b, MSEL.guessFee));
+      mod.note("Submitting your guess — a wrong guess costs the guess fee (" + fmtUnits(gf, net.currency.symbol) + "), which joins the pool. You must hold a CIPHER token…");
+      await modSend(b, encodeSolve(v1), gf, mod);
+    }},
+    frag: true
+  }
+];
+function encodeSolve(text){
+  const bytes = new TextEncoder().encode(text);
+  const len = bytes.length;
+  let dataHex = "";
+  bytes.forEach(b => { dataHex += b.toString(16).padStart(2, "0"); });
+  dataHex = dataHex.padEnd(Math.ceil(len / 32) * 64 || 64, "0");
+  return MSEL.solve + (32).toString(16).padStart(64, "0") + len.toString(16).padStart(64, "0") + dataHex;
+}
+function decodeFragment(hex){
+  const h = hex.replace(/^0x/, "");
+  const word = i => BigInt("0x" + h.slice(i * 64, i * 64 + 64));
+  const index = Number(word(0)), digit = Number(word(2)), isSet = word(3) === 1n;
+  const off = Number(word(1)) * 2;
+  const len = Number(BigInt("0x" + h.slice(off, off + 64)));
+  const bytes = [];
+  for (let i = 0; i < len; i++) bytes.push(parseInt(h.slice(off + 64 + i * 2, off + 66 + i * 2), 16));
+  return { index, text: new TextDecoder().decode(new Uint8Array(bytes)), digit, isSet };
+}
+async function modSend(to, data, valueWei, mod){
+  if (!account) { mod.note("Connect your wallet above first.", "err"); return; }
+  try {
+    await ensureChain();
+    mod.note("Confirm in your wallet…");
+    const hash = await window.ethereum.request({ method: "eth_sendTransaction", params: [{
+      from: account, to, value: "0x" + valueWei.toString(16), data
+    }] });
+    mod.note("Sent — waiting for confirmation… tx " + hash);
+    let receipt = null;
+    for (let i = 0; i < 60 && !receipt; i++) {
+      receipt = await rpc(net.rpc, "eth_getTransactionReceipt", [hash]);
+      if (!receipt) await new Promise(r => setTimeout(r, 2000));
+    }
+    const url = net.explorer + "/tx/" + hash;
+    if (receipt && receipt.status === "0x1") mod.note("✅ Confirmed. Tx: " + hash + " (" + url + ")", "ok");
+    else if (receipt) mod.note("Transaction reverted on-chain. Tx: " + hash, "err");
+    else mod.note("Still confirming — check: " + url);
+    renderModules();
+  } catch (e) {
+    if (e.code === 4001) mod.note("Rejected in the wallet — nothing was sent.", "err");
+    else mod.note("Failed: " + (e.message || e), "err");
+  }
+}
+function renderModules(){
+  const grid = $("moduleGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  MODULES.forEach(mod => {
+    const card = document.createElement("div");
+    card.className = "card";
+    const addr = net.live ? mod.contracts[net.key] : null;
+    let html = "<h3 style='font-size:19px;margin-bottom:4px'>" + mod.name + " <span style='color:var(--dim);font-size:13px'>" + mod.symbol + "</span></h3>" +
+      "<p style='color:var(--dim);font-size:14px;margin-bottom:12px'>" + mod.hook + "</p>";
+    if (!addr) {
+      html += "<p style='font-size:14px'>Testnet only — switch to Arc Testnet or Robinhood Chain Testnet above.</p>";
+    } else {
+      html += "<p class='addr' style='margin-bottom:4px'>Contract: <a href='" + net.explorer + "/address/" + addr + "' target='_blank' rel='noopener'>" + addr + "</a></p>";
+      if (mod.extra) {
+        const ex = mod.extra[net.key];
+        html += "<p class='addr' style='margin-bottom:4px'>" + ex[0] + ": <a href='" + net.explorer + "/address/" + ex[1] + "' target='_blank' rel='noopener'>" + ex[1] + "</a></p>";
+      }
+      html += "<p style='font-size:14px;margin:10px 0 2px'>Mint fee: <strong class='mFee'>…</strong> (mint price 0)</p>" +
+        "<p style='font-size:14px'>Minted: <strong class='mMinted'>…</strong> <span style='color:var(--dim)'>/ 10,000</span></p>" +
+        "<p style='font-size:14px'>Module: <strong class='mStat'>…</strong></p>" +
+        "<p style='font-size:14px'>You hold: <strong class='mOwn'>" + (account ? "…" : "connect wallet") + "</strong></p>" +
+        "<div class='row' style='margin-top:12px'>" +
+          "<div class='qty'><button class='mMinus' aria-label='decrease quantity'>−</button>" +
+          "<input class='mQty' type='number' min='1' max='10' value='1'>" +
+          "<button class='mPlus' aria-label='increase quantity'>+</button></div>" +
+          "<button class='big mMint'>Mint free</button>" +
+        "</div>" +
+        "<div class='row' style='margin-top:12px'>" +
+          "<input class='mIn1' type='" + (mod.action.wide ? "text" : "number") + "' min='1' placeholder='" + mod.action.label + "' style='flex:1;min-width:110px;height:44px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--txt);padding:0 12px;font-size:15px'>" +
+          (mod.action.input2 ? "<input class='mIn2' type='number' min='1' placeholder='" + mod.action.input2 + "' style='width:110px;height:44px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--txt);padding:0 12px;font-size:15px'>" : "") +
+          "<button class='ghost mAct'>" + mod.action.btn + "</button>" +
+        "</div>" +
+        (mod.frag ? "<div class='row' style='margin-top:10px'><input class='mFragId' type='number' min='1' placeholder='Token ID' style='width:110px;height:44px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--txt);padding:0 12px;font-size:15px'><button class='ghost mFrag'>Read fragment</button></div>" : "") +
+        "<div class='msg mMsg'></div>";
+    }
+    card.innerHTML = html;
+    grid.appendChild(card);
+    if (!addr) return;
+
+    const q = sel => card.querySelector(sel);
+    mod.note = (text, kind) => { const m = q(".mMsg"); m.textContent = text || ""; m.className = "msg mMsg" + (kind ? " " + kind : ""); };
+    const qtyOf = () => { let v = parseInt(q(".mQty").value, 10); if (isNaN(v)) v = 1; return Math.min(10, Math.max(1, v)); };
+    q(".mMinus").addEventListener("click", () => { q(".mQty").value = qtyOf() - 1; });
+    q(".mPlus").addEventListener("click", () => { q(".mQty").value = qtyOf() + 1; });
+    q(".mMint").addEventListener("click", async () => {
+      try {
+        const fee = decodeUint(await ethCall(addr, MSEL.mintFee));
+        mod.note("Minting " + qtyOf() + " × " + mod.name + " — price 0, fee " + fmtUnits(fee * BigInt(qtyOf()), net.currency.symbol) + " total…");
+        await modSend(addr, MSEL.mint + u256(qtyOf()), fee * BigInt(qtyOf()), mod);
+      } catch (e) { mod.note("Could not read the mint fee: " + (e.message || e), "err"); }
+    });
+    q(".mAct").addEventListener("click", async () => {
+      const v1 = mod.action.wide ? q(".mIn1").value.trim() : parseInt(q(".mIn1").value, 10);
+      const v2 = mod.action.input2 ? parseInt(q(".mIn2").value, 10) : null;
+      if (!mod.action.wide && (isNaN(v1) || v1 < 1)) { mod.note("Enter a token ID first.", "err"); return; }
+      if (mod.action.wide && !v1) { mod.note("Type your phrase guess first.", "err"); return; }
+      if (mod.action.input2 && (isNaN(v2) || v2 < 1)) { mod.note("Enter both token IDs.", "err"); return; }
+      try { await mod.action.run(mod, addr, v1, v2); }
+      catch (e) { mod.note("Action failed: " + (e.message || e), "err"); }
+    });
+    if (mod.frag) q(".mFrag").addEventListener("click", async () => {
+      const id = parseInt(q(".mFragId").value, 10);
+      if (isNaN(id) || id < 1) { mod.note("Enter a token ID first.", "err"); return; }
+      try {
+        const f = decodeFragment(await ethCall(addr, MSEL.fragmentOf + u256(id)));
+        mod.note(f.isSet
+          ? "Token #" + id + " carries fragment #" + f.index + ": \"" + f.text + "\" (check digit " + f.digit + ")."
+          : "Token #" + id + " has no fragment set yet.");
+      } catch (e) { mod.note("Fragment read failed: " + (e.message || e), "err"); }
+    });
+
+    // live reads
+    (async () => {
+      try {
+        const [fee, minted] = await Promise.all([ethCall(addr, MSEL.mintFee), ethCall(addr, MSEL.totalMinted)]);
+        q(".mFee").textContent = fmtUnits(decodeUint(fee), net.currency.symbol);
+        q(".mMinted").textContent = fmtInt(Number(decodeUint(minted)));
+        q(".mStat").textContent = await mod.stat(addr, mod);
+        if (account) q(".mOwn").textContent = fmtInt(Number(decodeUint(await ethCall(addr, MSEL.balanceOf + padAddr(account).slice(2)))));
+      } catch (e) {
+        q(".mFee").textContent = "unreachable";
+      }
+    })();
+  });
+}
+// re-render modules whenever the network render runs / wallet changes
+const _renderNetsOrig = renderNets;
+renderNets = function(){ _renderNetsOrig(); renderModules(); };
+if (hasWallet() && window.ethereum.on) {
+  window.ethereum.on("accountsChanged", () => setTimeout(renderModules, 50));
+  window.ethereum.on("chainChanged", () => renderModules());
+}
+renderModules();
 </script>
 </body>
 </html>
